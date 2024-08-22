@@ -1,9 +1,22 @@
 function initMap() {
-    // Create a new map centered on the world
+    // Initialize the map centered on Oklahoma
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
-        center: {lat: 36.5, lng: -97.5}  // Center the map roughly around Oklahoma
+        zoom: 8,
+        center: {lat: 35.4676, lng: -97.5164},  // Center the map on Oklahoma City
+        mapTypeId: 'roadmap'
     });
+
+    // Set up the Street View Panorama
+    var panorama = new google.maps.StreetViewPanorama(
+        document.getElementById('pano'), {
+            position: {lat: 35.4676, lng: -97.5164},  // Initialize Street View position
+            pov: {heading: 165, pitch: 0},  // Set initial point of view
+            zoom: 1
+        }
+    );
+
+    // Link the map to the Street View
+    map.setStreetView(panorama);
 
     // OData API URL
     const odataUrl = 'https://data.ok.gov/datastore/odata3.0/f07e83d4-8f6e-421f-9701-7682bf01b28d?$format=json';
@@ -12,33 +25,30 @@ function initMap() {
     fetch(odataUrl)
         .then(response => response.json())
         .then(data => {
-            // Loop through each entry in the dataset
             data.value.forEach(function(item) {
-                var lat = parseFloat(item.LATITUDE);  // Use the 'LATITUDE' column from your dataset
-                var lng = parseFloat(item.LONGITUDE); // Use the 'LONGITUDE' column from your dataset
-                var name = item.NAME;                 // Use the 'NAME' column from your dataset
-                var address = item.ADDRESS;           // Use the 'ADDRESS' column from your dataset
+                var lat = parseFloat(item.LATITUDE);
+                var lng = parseFloat(item.LONGITUDE);
+                var name = item.NAME;
+                var address = item.ADDRESS;
 
-                // Check if latitude and longitude are valid numbers
                 if (!isNaN(lat) && !isNaN(lng)) {
-                    // Create a marker for each entry
+                    // Create a marker for each location in the dataset
                     var marker = new google.maps.Marker({
                         position: {lat: lat, lng: lng},
                         map: map,
                         title: name
                     });
 
-                    // Create an info window for each marker
-                    var infowindow = new google.maps.InfoWindow({
-                        content: `<h3>${name}</h3><p>${address}</p>`
-                    });
-
-                    // Add a click listener to open the info window when the marker is clicked
+                    // When the marker is clicked, update the Street View position and POV
                     marker.addListener('click', function() {
-                        infowindow.open(map, marker);
+                        panorama.setPosition(marker.getPosition());
+                        panorama.setPov({
+                            heading: 34,
+                            pitch: 10
+                        });
+                        panorama.setVisible(true);
+                        map.setStreetView(panorama);
                     });
-                } else {
-                    console.error('Invalid latitude or longitude for item:', item);
                 }
             });
         })
