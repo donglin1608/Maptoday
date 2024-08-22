@@ -1,4 +1,4 @@
-
+AIzaSyCFkCZbfL_zFHU7iPP3_29-nhjt9JQqijA
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +7,13 @@
     <title>Oklahoma Universities</title>
     <style>
         #map {
-            height: 100%;
+            height: 50%;
+            width: 100%;
+        }
+
+        #pano {
+            height: 50%;  /* Half the height for the Street View */
+            width: 100%;
         }
         html, body {
             height: 100%;
@@ -18,6 +24,9 @@
 </head>
 <body>
     <div id="map"></div>
+     
+    <!-- The div element where the Street View will be displayed -->
+    <div id="pano"></div>
 
     <!-- Load the Google Maps JavaScript API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFkCZbfL_zFHU7iPP3_29-nhjt9JQqijA&callback=initMap" async defer></script>
