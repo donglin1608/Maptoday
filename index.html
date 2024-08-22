@@ -3,9 +3,11 @@
 <head>
     <title>Maptoday Project</title>
     <style>
+        /* Set the size of the div element that contains the map */
         #map {
             height: 100%;
         }
+        /* The HTML body and the map container should be full height */
         html, body {
             height: 100%;
             margin: 0;
@@ -14,12 +16,22 @@
     </style>
 </head>
 <body>
+    <!-- The div element where the map will be displayed -->
     <div id="map"></div>
 
     <!-- Load the Google Maps JavaScript API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFkCZbfL_zFHU7iPP3_29-nhjt9JQqijA&callback=initMap" async defer></script>
 
-    <!-- Link to your external JavaScript file on GitHub -->
-    <script src="https://raw.githubusercontent.com/donglin1608/Maptoday/main/script.js"></script>
+    <!-- JavaScript to initialize the map -->
+    <script>
+        // Replace 'YOUR_API_KEY' with your actual API key
+        function initMap() {
+            // Create a map object and specify the DOM element for display.
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644}, // Set initial center of the map
+                zoom: 8 // Set initial zoom level
+            });
+        }
+    </script>
 </body>
 </html>
