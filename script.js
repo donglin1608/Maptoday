@@ -5,7 +5,7 @@ function initMap() {
     });
 
     // URL to fetch the Google Sheets data in CSV format
-    var sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqV1lnSTVj5NB7N3GGLRHJUlShqIqxJfvtr-BVJh7eWJvNY2DS2tNDN-BiMbx5lPsk6gxXW7r0LGB0/pub?output=csv';
+    var sheetUrl = 'https://docs.google.com/spreadsheets/d/1nBJ0984DRA4wHCezmLaCO_poDfr70fnWvS-qBRmcYLw/edit?usp=sharing';
 
     // Fetch the data
     fetch(sheetUrl)
